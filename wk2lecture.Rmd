@@ -2,7 +2,7 @@
 title: "W2LECTURE-240124"
 author: "niyun"
 date: "2024-01-24"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
