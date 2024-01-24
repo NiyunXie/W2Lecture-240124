@@ -14,8 +14,37 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Read in data
 ```{r}
 wk2_stocks <- readRDS("wk2_stocks.rds")
 str(wk2_stocks)
 ```
 
+## Statistics on returns
+```{r}
+sum(wk2_stocks$SPY_returns) * 100
+mean(wk2_stocks$SPY_returns) * 100
+sd(wk2_stocks$SPY_returns) * 100
+```
+
++ The cumulative returns of the S&P index during this period is `r round(sum(wk2_stocks$SPY_returns) * 100, 2)`%
+
++ The average daily returns of the S&P index during this period is `r round(mean(wk2_stocks$SPY_returns) * 100, 2)`%
+
++ The standard deviation of the daily returns of the S&P index during this period is `r round(sd(wk2_stocks$SPY_returns) * 100, 2)`%
+
+## S&P Prices
+```{r message = FALSE, warning = FALSE}
+library(tidyverse) 
+ggplot(data = wk2_stocks, aes(x = date, y = SPY_prices)) + geom_line()
+```
+
+## S&P Yearly Returns
+```{r}
+wk2_stocks %>%
+  mutate(year = year(date)) %>% 
+  filter (year <= 2013) %>%
+  group_by(year) %>%
+  summarize(yr_return = sum(SPY_returns)) %>%
+  ggplot(aes(x = year, y = yr_return)) + geom_col()
+```
